@@ -17,9 +17,9 @@ RUN apt-get update --fix-missing \
     && rm -rf /var/lib/apt/lists/*
 
 
-RUN addgroup steam \
-    && useradd -g steam steam \
-    && usermod -aG sudo steam
+RUN addgroup user \
+    && useradd -g user user \
+    && usermod -aG sudo user
 
 ENV TICKRATE=""
 ENV MAXPLAYERS=""
@@ -35,9 +35,9 @@ RUN mkdir -p /home/steam/cs2
 
 WORKDIR /home/cs2-modded-server/
 
-RUN chown -R steam:steam /home/steam/cs2
+RUN chown -R user:user /home/user/cs2
 
-RUN git clone https://github.com/kus/cs2-modded-server
+RUN git clone https://github.com/JantsoP/cs2-modded-server
 
 RUN echo cloned repository
 
