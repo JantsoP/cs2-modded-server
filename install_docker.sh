@@ -87,14 +87,14 @@ if [ ! -z "$DUCK_TOKEN" ]; then
 fi
 
 echo "Checking $user user exists..."
-getent passwd $user >/dev/null 2&>1
+getent passwd ${user} >/dev/null 2&>1
 if [ "$?" -ne "0" ]; then
 	echo "Adding $user user..."
-	addgroup $user && \
-	adduser --system --home /home/$user --shell /bin/false --ingroup $user $user && \
-	usermod -a -G tty $user && \
-	mkdir -m 777 /home/$user/cs2 && \
-	chown -R $user:$user /home/$user/cs2
+	addgroup ${user} && \
+	adduser --system --home /home/${user} --shell /bin/false --ingroup ${user} ${user} && \
+	usermod -a -G tty ${user} && \
+	mkdir -m 777 /home/${user}/ && \
+	chown -R ${user}:${user} /home/${user}
 	if [ "$?" -ne "0" ]; then
 		echo "ERROR: Cannot add user $user..."
 		exit 1
@@ -112,7 +112,7 @@ if [ ! -d "/steamcmd" ]; then
 	ln -s /steamcmd/linux64/steamclient.so /root/.steam/sdk64/
 fi
 
-chown -R $user:$user /steamcmd
+chown -R ${user}:${user} /steamcmd
 
 echo "Downloading any updates for CS2..."
 # https://developer.valvesoftware.com/wiki/Command_line_options
@@ -120,12 +120,12 @@ sudo -u $user /steamcmd/steamcmd.sh \
   +api_logging 1 1 \
   +@sSteamCmdForcePlatformType linux \
   +@sSteamCmdForcePlatformBitness $BITS \
-  +force_install_dir /home/$user/cs2 \
+  +force_install_dir /home/${user}/cs2 \
   +login anonymous \
   +app_update 730 \
   +quit
 
-cd /home/$user
+cd /home/${user}
 echo "/home/user !!!!!!!"
 
 # mkdir -p /root/.steam/sdk32/
@@ -133,20 +133,20 @@ echo "/home/user !!!!!!!"
 # mkdir -p /root/.steam/sdk64/
 # ln -sf /steamcmd/linux64/steamclient.so /root/.steam/sdk64/
 
-mkdir -p /home/$user/.steam/sdk32/
-ln -sf /steamcmd/linux32/steamclient.so /home/$user/.steam/sdk32/
-mkdir -p /home/$user/.steam/sdk64/
-ln -sf /steamcmd/linux64/steamclient.so /home/$user/.steam/sdk64/
+mkdir -p /home/${user}/.steam/sdk32/
+ln -sf /steamcmd/linux32/steamclient.so /home/${user}/.steam/sdk32/
+mkdir -p /home/${user}/.steam/sdk64/
+ln -sf /steamcmd/linux64/steamclient.so /home/${user}/.steam/sdk64/
 
 echo "Installing mods"
-cp -R /home/game/csgo/ /home/$user/cs2/game/
+cp -R /home/game/csgo/ /home/${user}/cs2/game/
 
 echo "Merging in custom files"
-cp -RT /home/custom_files/ /home/$user/cs2/game/csgo/
+cp -RT /home/custom_files/ /home/${user}/cs2/game/csgo/
 
-chown -R $user:$user /home/$user/cs2
+chown -R ${user}:${user} /home/${user}/cs2
 
-cd /home/$user/cs2
+cd /home/${user}/cs2
 
 # Define the file name
 FILE="game/csgo/gameinfo.gi"
