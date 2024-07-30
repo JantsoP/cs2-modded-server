@@ -4,7 +4,7 @@
 # cd / && curl -s -H "Cache-Control: no-cache" -o "install.sh" "https://raw.githubusercontent.com/kus/cs2-modded-server/master/install.sh" && chmod +x install.sh && bash install.sh
 
 # Variables
-user="steam"
+user="user"
 BRANCH="master"
 
 # Check if MOD_BRANCH is set and not empty
